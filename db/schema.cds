@@ -24,3 +24,9 @@ entity StorageLocations : cuid, managed {
     plant  : Association to Plants not null;
     active : Boolean default true;
 }
+
+entity Stock : cuid, managed {
+    product         : Association to Products not null;
+    storageLocation : Association to StorageLocations not null;
+    quantity        : Decimal(15,3) default 0;
+}
