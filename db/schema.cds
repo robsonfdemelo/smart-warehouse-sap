@@ -25,6 +25,7 @@ entity StorageLocations : cuid, managed {
     active : Boolean default true;
 }
 
+@assert.unique: { productStorage: [product, storageLocation] }
 entity Stock : cuid, managed {
     product         : Association to Products not null;
     storageLocation : Association to StorageLocations not null;
