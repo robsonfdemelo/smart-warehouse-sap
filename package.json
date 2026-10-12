@@ -1,0 +1,31 @@
+
+{
+  "name": "smart-warehouse-sap",
+  "version": "1.0.0",
+  "description": "Smart Warehouse SAP - Sistema de Gestão de Armazém",
+  "main": "index.js",
+  "scripts": {
+    "start": "cds serve",
+    "watch": "cds watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@sap/cds": "10.1.1"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^3.1.2"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    }
+  }
+}
