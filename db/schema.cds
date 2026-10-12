@@ -11,3 +11,16 @@ entity Products : cuid, managed {
     unit        : String(10);
     active      : Boolean default true;
 }
+
+entity Plants : cuid, managed {
+    code   : String(10) @mandatory;
+    name   : String(100) @mandatory;
+    active : Boolean default true;
+}
+
+entity StorageLocations : cuid, managed {
+    code   : String(10) @mandatory;
+    name   : String(100) @mandatory;
+    plant  : Association to Plants not null;
+    active : Boolean default true;
+}
