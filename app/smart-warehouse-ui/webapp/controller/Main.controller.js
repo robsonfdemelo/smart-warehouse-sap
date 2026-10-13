@@ -275,6 +275,12 @@ sap.ui.define([
                 }
 
                 await this.loadDashboard();
+                const oMovementsBinding = this.byId("movementsTable").getBinding("items");
+
+                if (oMovementsBinding) {
+                    oMovementsBinding.refresh();
+                }
+
             } catch (oError) {
                 console.error("Erro na movimentação:", oError);
 
@@ -286,10 +292,28 @@ sap.ui.define([
                 oOperation.setProperty("/saving", false);
             }
         },
+        onRefreshHistory: function () {
+            const oBinding = this.byId("movementsTable")
+                .getBinding("items");
+
+            if (oBinding) {
+                oBinding.refresh();
+                MessageToast.show("Histórico atualizado.");
+            }
+        },
 
         onRefresh: async function () {
-            const oBinding = this.byId("stockTable")
-                .getBinding("items");
+            const oTable = this.byId("stockTable");
+
+            if (!oTable) {
+                console.error("Tabela stockTable não encontrada na View.");
+                MessageBox.error(
+                    "A tabela de estoque não foi encontrada. Verifique a Main.view.xml."
+                );
+                return;
+            }
+
+            const oBinding = oTable.getBinding("items");
 
             if (oBinding) {
                 oBinding.refresh();
