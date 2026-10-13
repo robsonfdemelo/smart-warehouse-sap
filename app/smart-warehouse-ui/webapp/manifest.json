@@ -45,6 +45,13 @@
             "type": "XML",
             "id": "Main",
             "async": true
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
         }
     }
 }

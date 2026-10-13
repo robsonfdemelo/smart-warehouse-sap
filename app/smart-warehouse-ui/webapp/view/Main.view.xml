@@ -22,7 +22,7 @@
                     class="sapUiMediumMarginBottom">
                     <VBox
                         width="15rem"
-                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom sapUiContentPadding sapUiShadowLevel1">
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <Title text="Produtos distintos" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalProducts}"
@@ -31,7 +31,7 @@
                     </VBox>
                     <VBox
                         width="15rem"
-                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom sapUiContentPadding sapUiShadowLevel1">
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <Title text="Depósitos com saldo" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalLocations}"
@@ -40,7 +40,7 @@
                     </VBox>
                     <VBox
                         width="15rem"
-                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom sapUiContentPadding sapUiShadowLevel1">
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <Title text="Unidades em estoque" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalQuantity}"
