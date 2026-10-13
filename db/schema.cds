@@ -31,3 +31,13 @@ entity Stock : cuid, managed {
     storageLocation : Association to StorageLocations not null;
     quantity        : Decimal(15,3) default 0;
 }
+
+entity StockMovements : cuid, managed {
+    type                : String(20) not null;
+    product             : Association to Products not null;
+    sourceLocation      : Association to StorageLocations;
+    destinationLocation : Association to StorageLocations;
+    quantity            : Decimal(15,3) not null;
+    reference           : String(100);
+    notes               : String(255);
+}
