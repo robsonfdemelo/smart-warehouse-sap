@@ -6,9 +6,13 @@
   "main": "index.js",
   "scripts": {
     "start": "cds serve",
+<<<<<<< HEAD
     "watch": "cds watch",
     "test:api": "node --test test/catalog-api.test.js",
     "test:integration": "node --test --test-concurrency=1 test/stock-entry.integration.test.js test/stock-exit.integration.test.js test/stock-transfer.integration.test.js test/stock-validation.integration.test.js"
+=======
+    "watch": "cds watch"
+>>>>>>> origin/main
   },
   "keywords": [],
   "author": "",
@@ -19,5 +23,18 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^3.1.2"
+<<<<<<< HEAD
+=======
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    }
+>>>>>>> origin/main
   }
 }

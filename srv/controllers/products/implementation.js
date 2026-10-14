@@ -5,12 +5,18 @@ class ProductsController {
 
     async validateCreate(req) {
         await this.service.validateCode(req, false);
+<<<<<<< HEAD
         this.service.validateName(req);
+=======
+>>>>>>> origin/main
     }
 
     async validateUpdate(req) {
         await this.service.validateCode(req, true);
+<<<<<<< HEAD
         this.service.validateName(req);
+=======
+>>>>>>> origin/main
     }
 }
 
