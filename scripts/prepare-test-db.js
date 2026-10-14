@@ -42,17 +42,28 @@ async function main() {
         const centroID = cds.utils.uuid();
         const depositoPrincipalID = cds.utils.uuid();
         const depositoSecundarioID = cds.utils.uuid();
-        const produtoID = cds.utils.uuid();
 
-        await db.run(
-            INSERT.into(Products).entries({
-                ID: produtoID,
-                code: "MAT0001",
-                name: "Notebook Dell",
-                unit: "UN",
-                active: true
+        let produto = await db.run(
+            SELECT.one.from(Products).where({
+                code: "MAT0001"
             })
         );
+
+        if (!produto) {
+            const produtoID = cds.utils.uuid();
+
+            await db.run(
+                INSERT.into(Products).entries({
+                    ID: produtoID,
+                    code: "MAT0001",
+                    name: "Notebook Dell",
+                    unit: "UN",
+                    active: true
+                })
+            );
+
+            produto = { ID: produtoID };
+        }
 
         await db.run(
             INSERT.into(Plants).entries({
@@ -85,13 +96,27 @@ async function main() {
         await db.run(
             INSERT.into(Stock).entries({
                 ID: cds.utils.uuid(),
-                product_ID: produtoID,
+                product_ID: produto.ID,
                 storageLocation_ID: depositoPrincipalID,
                 quantity: 100
             })
         );
 
+        const produtosMAT0001 = await db.run(
+            SELECT.from(Products).where({
+                code: "MAT0001"
+            })
+        );
+
+        if (produtosMAT0001.length !== 1) {
+            throw new Error(
+                "O banco de testes deve conter exatamente um produto MAT0001."
+            );
+        }
+
         console.log("Banco de integracao preparado:", dbPath);
+        console.log("Produto MAT0001:", produto.ID);
+        console.log("Saldo inicial:", 100);
     } finally {
         await db.disconnect();
     }
