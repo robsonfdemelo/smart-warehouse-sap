@@ -1,0 +1,41 @@
+
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "credentials": {
+        "url": "db.sqlite"
+      }
+    }
+  },
+  "[test]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/test.sqlite"
+        }
+      }
+    }
+  },
+  "[integration]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/integration.sqlite"
+        }
+      }
+    }
+  },
+  "[ci]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/ci-validation.sqlite"
+        }
+      }
+    }
+  }
+}

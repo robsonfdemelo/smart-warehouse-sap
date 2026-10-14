@@ -1,0 +1,35 @@
+node_modules/
+target/
+_out/
+gen/
+
+.cdsrc-private.json
+default-*.json
+
+# SQLite
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# MTA
+mta_archives/
+*_mta_build_tmp
+*.mtar
+
+# Other
+.DS_Store
+
+# @cap-js/cds-typer
+@cds-models
+
+# Backups locais
+/backups/
+
+# Logs
+/logs/
+*.log
+
+# Variaveis de ambiente
+.env
+.env.*
+!.env.example

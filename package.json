@@ -1,0 +1,23 @@
+
+{
+  "name": "smart-warehouse-sap",
+  "version": "1.0.0",
+  "description": "Smart Warehouse SAP - Sistema de Gestão de Armazém",
+  "main": "index.js",
+  "scripts": {
+    "start": "cds serve",
+    "watch": "cds watch",
+    "test:api": "node --test test/catalog-api.test.js",
+    "test:integration": "node --test --test-concurrency=1 test/stock-entry.integration.test.js test/stock-exit.integration.test.js test/stock-transfer.integration.test.js test/stock-validation.integration.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@sap/cds": "10.1.1"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^3.1.2"
+  }
+}

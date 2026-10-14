@@ -1,0 +1,361 @@
+<mvc:View
+    controllerName="smartwarehouse.ui.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    height="100%">
+    <Page
+        title="Smart Warehouse SAP"
+        enableScrolling="true">
+        <content>
+            <VBox class="sapUiMediumMargin" renderType="Bare">
+                <Title
+                    text="Gestão de Estoque"
+                    level="H2"
+                    class="sapUiSmallMarginBottom"/>
+                <Text
+                    text="Visão geral e movimentações de materiais."
+                    class="sapUiMediumMarginBottom"/>
+                <HBox
+                    wrap="Wrap"
+                    renderType="Bare"
+                    class="sapUiMediumMarginBottom">
+                    <VBox
+                        width="15rem"
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://product" size="1.5rem" class="sapUiTinyMarginBottom"/>
+                        <Title text="Produtos distintos" level="H4"/>
+                        <ObjectNumber
+                            number="{dashboard>/totalProducts}"
+                            emphasized="true"/>
+                        <Text text="Materiais no estoque"/>
+                    </VBox>
+                    <VBox
+                        width="15rem"
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://factory" size="1.5rem" class="sapUiTinyMarginBottom"/>
+                        <Title text="Depósitos com saldo" level="H4"/>
+                        <ObjectNumber
+                            number="{dashboard>/totalLocations}"
+                            emphasized="true"/>
+                        <Text text="Locais com estoque positivo"/>
+                    </VBox>
+                    <VBox
+                        width="15rem"
+                        class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://inventory" size="1.5rem" class="sapUiTinyMarginBottom"/>
+                        <Title text="Unidades em estoque" level="H4"/>
+                        <ObjectNumber
+                            number="{dashboard>/totalQuantity}"
+                            emphasized="true"/>
+                        <Text text="Saldo total disponível"/>
+                    </VBox>
+                </HBox>
+                <Toolbar class="sapUiMediumMarginBottom">
+                    <Title text="Módulos" level="H3"/>
+                    <ToolbarSpacer/>
+                    <Button text="Cadastro de produtos" icon="sap-icon://product" type="Emphasized" press=".onOpenProducts"/>
+                </Toolbar>
+                <Toolbar class="sapUiMediumMarginBottom">
+                    <Title text="Movimentações" level="H3"/>
+                    <ToolbarSpacer/>
+                    <Button
+                        text="Entrada"
+                        icon="sap-icon://add"
+                        type="Accept"
+                        press=".onOpenEntry"/>
+                    <Button
+                        text="Saída"
+                        icon="sap-icon://less"
+                        type="Reject"
+                        press=".onOpenExit"/>
+                    <Button
+                        text="Transferência"
+                        icon="sap-icon://synchronize"
+                        press=".onOpenTransfer"/>
+                </Toolbar>
+                <Toolbar>
+                    <Title text="Estoque disponível" level="H3"/>
+                    <ToolbarSpacer/>
+                    <Button
+                        text="Atualizar"
+                        icon="sap-icon://refresh"
+                        type="Emphasized"
+                        enabled="{= !${dashboard>/loading} }"
+                        press=".onRefresh"/>
+                </Toolbar>
+<Table
+    id="stockTable"
+    width="100%"
+    growing="true"
+    growingThreshold="20"
+    noDataText="Nenhum registro de estoque encontrado."
+    items="{
+        path: '/Stock',
+        parameters: {
+            $expand: 'product,storageLocation'
+        }
+    }">
+    <columns>
+        <Column><Text text="Produto"/></Column>
+        <Column><Text text="Descrição"/></Column>
+        <Column><Text text="Depósito"/></Column>
+        <Column hAlign="End"><Text text="Quantidade"/></Column>
+    </columns>
+    <items>
+        <ColumnListItem>
+            <cells>
+                <Text text="{product/code}"/>
+                <Text text="{product/name}"/>
+                <Text text="{storageLocation/code}"/>
+                <ObjectNumber number="{quantity}"/>
+            </cells>
+        </ColumnListItem>
+    </items>
+</Table>
+<Toolbar class="sapUiMediumMarginTop">
+    <Title
+        text="Histórico de movimentações"
+        level="H3"/>
+    <ToolbarSpacer/>
+    <Button
+        text="Atualizar histórico"
+        icon="sap-icon://refresh"
+        press=".onRefreshHistory"/>
+</Toolbar>
+        <Table
+            id="movementsTable"
+            width="100%"
+            growing="true"
+            growingThreshold="20"
+            noDataText="Nenhuma movimentação encontrada."
+            items="{
+                path: '/StockMovements',
+                parameters: {
+                    $expand: 'product,sourceLocation,destinationLocation',
+                    $orderby: 'createdAt desc'
+                }
+            }">
+            <columns>
+                <Column>
+                    <Text text="Data"/>
+                </Column>
+                <Column>
+                    <Text text="Tipo"/>
+                </Column>
+                <Column>
+                    <Text text="Produto"/>
+                </Column>
+                <Column>
+                    <Text text="Origem"/>
+                </Column>
+                <Column>
+                    <Text text="Destino"/>
+                </Column>
+                <Column hAlign="End">
+                    <Text text="Quantidade"/>
+                </Column>
+                <Column>
+                    <Text text="Referência"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{createdAt}"/>
+                        <ObjectStatus
+                         text="{path: 'type', formatter: '.formatter.movementType'}"
+                         state="{path: 'type', formatter: '.formatter.movementState'}"/>
+                        <Text text="{product/code}"/>
+                        <Text text="{sourceLocation/code}"/>
+                        <Text text="{destinationLocation/code}"/>
+                        <ObjectNumber number="{quantity}"/>
+                        <Text text="{reference}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+            </VBox>
+        </content>
+        <dependents>
+            <Dialog
+                id="productsDialog"
+                title="Cadastro de produtos"
+                contentWidth="60rem"
+                stretchOnPhone="true">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Toolbar>
+                            <Title text="Produtos cadastrados" level="H3"/>
+                            <ToolbarSpacer/>
+                            <Button text="Novo produto" icon="sap-icon://add" type="Emphasized" press=".onNewProduct"/>
+                        </Toolbar>
+                        <Table id="productsTable" items="{/Products}" noDataText="Nenhum produto cadastrado">
+                            <columns>
+                                <Column><Text text="Código"/></Column>
+                                <Column><Text text="Nome"/></Column>
+                                <Column><Text text="Categoria"/></Column>
+                                <Column><Text text="Unidade"/></Column>
+                                <Column><Text text="Status"/></Column>
+                                <Column hAlign="End"><Text text="Ações"/></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{code}"/>
+                                        <Text text="{name}"/>
+                                        <Text text="{category}"/>
+                                        <Text text="{unit}"/>
+                                        <ObjectStatus text="{= ${active} ? 'Ativo' : 'Inativo' }" state="{= ${active} ? 'Success' : 'Error' }"/>
+                                        <HBox justifyContent="End" alignItems="Center">
+                                            <Button icon="sap-icon://edit" tooltip="Editar produto" type="Transparent" press=".onEditProduct"/>
+                                            <Button icon="sap-icon://activate" tooltip="Ativar ou desativar produto" type="Transparent" press=".onToggleProductActive"/>
+                                        </HBox>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </content>
+                <endButton>
+                    <Button text="Fechar" press=".onCloseProducts"/>
+                </endButton>
+            </Dialog>
+            <Dialog
+                id="productFormDialog"
+                title="{= ${productForm>/editing} ? 'Editar produto' : 'Novo produto' }"
+                contentWidth="32rem"
+                stretchOnPhone="true"
+                busy="{productForm>/saving}">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Label text="Código" required="true" labelFor="newProductCode"/>
+                        <Input id="newProductCode" value="{productForm>/code}" maxLength="20" class="sapUiTinyMarginBottom"/>
+                        <Label text="Nome" required="true" labelFor="newProductName"/>
+                        <Input id="newProductName" value="{productForm>/name}" maxLength="100" class="sapUiTinyMarginBottom"/>
+                        <Label text="Descrição" labelFor="newProductDescription"/>
+                        <Input id="newProductDescription" value="{productForm>/description}" maxLength="255" class="sapUiTinyMarginBottom"/>
+                        <Label text="Categoria" labelFor="newProductCategory"/>
+                        <Input id="newProductCategory" value="{productForm>/category}" maxLength="50" class="sapUiTinyMarginBottom"/>
+                        <Label text="Unidade" labelFor="newProductUnit"/>
+                        <Input id="newProductUnit" value="{productForm>/unit}" maxLength="10" class="sapUiTinyMarginBottom"/>
+                        <CheckBox text="Produto ativo" selected="{productForm>/active}"/>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Salvar" type="Emphasized" enabled="{= !${productForm>/saving} }" press=".onSaveProduct"/>
+                </beginButton>
+                <endButton>
+                    <Button text="Cancelar" enabled="{= !${productForm>/saving} }" press=".onCancelProduct"/>
+                </endButton>
+            </Dialog>
+            <Dialog
+                id="operationDialog"
+                title="{operation>/title}"
+                contentWidth="32rem"
+                contentHeight="auto"
+                verticalScrolling="true"
+                horizontalScrolling="false"
+                stretchOnPhone="true"
+                busy="{operation>/saving}">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Label
+                            text="Produto"
+                            required="true"
+                            labelFor="operationProduct"/>
+                        <Select
+                            id="operationProduct"
+                            width="100%"
+                            selectedKey="{operation>/product_ID}"
+                            forceSelection="false"
+                            class="sapUiTinyMarginBottom"
+                            items="{/Products}">
+                            <core:Item
+                                key="{ID}"
+                                text="{code} - {name}"/>
+                        </Select>
+                        <Label
+                            text="Depósito de origem"
+                            required="true"
+                            visible="{operation>/showSource}"
+                            labelFor="operationSource"/>
+                        <Select
+                            id="operationSource"
+                            width="100%"
+                            selectedKey="{operation>/sourceLocation_ID}"
+                            forceSelection="false"
+                            visible="{operation>/showSource}"
+                            class="sapUiTinyMarginBottom"
+                            items="{/StorageLocations}">
+                            <core:Item
+                                key="{ID}"
+                                text="{code} - {name}"/>
+                        </Select>
+                        <Label
+                            text="Depósito de destino"
+                            required="true"
+                            visible="{operation>/showDestination}"
+                            labelFor="operationDestination"/>
+                        <Select
+                            id="operationDestination"
+                            width="100%"
+                            selectedKey="{operation>/destinationLocation_ID}"
+                            forceSelection="false"
+                            visible="{operation>/showDestination}"
+                            class="sapUiTinyMarginBottom"
+                            items="{/StorageLocations}">
+                            <core:Item
+                                key="{ID}"
+                                text="{code} - {name}"/>
+                        </Select>
+                        <Label
+                            text="Quantidade"
+                            required="true"
+                            labelFor="operationQuantity"/>
+                        <Input
+                            id="operationQuantity"
+                            width="100%"
+                            type="Text"
+                            value="{operation>/quantity}"
+                            placeholder="Ex.: 5"
+                            class="sapUiTinyMarginBottom"/>
+                        <Label
+                            text="Referência"
+                            labelFor="operationReference"/>
+                        <Input
+                            id="operationReference"
+                            width="100%"
+                            maxLength="100"
+                            value="{operation>/reference}"
+                            placeholder="Ex.: NF-001"
+                            class="sapUiTinyMarginBottom"/>
+                        <Label
+                            text="Observações"
+                            labelFor="operationNotes"/>
+                        <TextArea
+                            id="operationNotes"
+                            width="100%"
+                            rows="3"
+                            maxLength="255"
+                            value="{operation>/notes}"
+                            placeholder="Observações da movimentação"/>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button
+                        text="Confirmar"
+                        type="Emphasized"
+                        enabled="{= !${operation>/saving} }"
+                        press=".onSaveOperation"/>
+                </beginButton>
+                <endButton>
+                    <Button
+                        text="Cancelar"
+                        enabled="{= !${operation>/saving} }"
+                        press=".onCancelOperation"/>
+                </endButton>
+            </Dialog>
+        </dependents>
+    </Page>
+</mvc:View>

@@ -1,0 +1,7 @@
+
+code,name,description,category,unit,active
+MAT0001,Notebook Dell,Notebook corporativo,Informatica,UN,true
+MAT0002,Mouse Logitech,Mouse sem fio,Perifericos,UN,true
+MAT0003,Teclado Dell,Teclado USB,Perifericos,UN,true
+MAT0004,Monitor Samsung,Monitor LED 24 polegadas,Informatica,UN,true
+MAT0005,Cabo HDMI,Cabo HDMI 2 metros,Acessorios,UN,true

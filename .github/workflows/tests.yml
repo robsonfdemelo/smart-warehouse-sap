@@ -1,0 +1,88 @@
+
+name: Smart Warehouse - CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar sintaxe
+        run: |
+          node --check test/catalog-api.test.js
+          node --check test/stock-entry.integration.test.js
+          node --check test/stock-exit.integration.test.js
+          node --check test/stock-transfer.integration.test.js
+          node --check test/stock-validation.integration.test.js
+          node --check scripts/prepare-test-db.js
+
+      - name: Validar modelo CAP
+        run: npx cds compile db/schema.cds srv/catalog-service.cds > /dev/null
+
+      - name: Preparar banco isolado
+        env:
+          TEST_DB_PATH: test/ci-validation.sqlite
+        run: node scripts/prepare-test-db.js
+
+      - name: Iniciar servidor CAP
+        run: |
+          npx cds serve --profile ci --port 4004 > /tmp/cap-api.log 2>&1 &
+          echo $! > /tmp/cap-api.pid
+
+      - name: Aguardar servidor
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:4004/odata/v4/catalog/Products > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/cap-api.log
+          exit 1
+
+      - name: Executar testes de API
+        run: npm run test:api
+
+      - name: Iniciar servidor de integracao
+        run: |
+          npx cds serve --profile ci --port 4006 > /tmp/cap-integration.log 2>&1 &
+          echo $! > /tmp/cap-integration.pid
+
+      - name: Aguardar servidor de integracao
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:4006/odata/v4/catalog/Products > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/cap-integration.log
+          exit 1
+
+      - name: Executar testes de integracao
+        run: npm run test:integration
+
+      - name: Encerrar servidores
+        if: always()
+        run: |
+          if [ -f /tmp/cap-api.pid ]; then
+            kill $(cat /tmp/cap-api.pid) 2>/dev/null || true
+          fi
+          if [ -f /tmp/cap-integration.pid ]; then
+            kill $(cat /tmp/cap-integration.pid) 2>/dev/null || true
+          fi

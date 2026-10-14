@@ -1,0 +1,21 @@
+
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "credentials": {
+        "url": "db.sqlite"
+      }
+    }
+  },
+  "[test]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/test.sqlite"
+        }
+      }
+    }
+  }
+}
