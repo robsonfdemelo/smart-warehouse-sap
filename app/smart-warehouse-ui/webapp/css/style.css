@@ -1,10 +1,10 @@
-
 .smartDashboardCard {
+    box-sizing: border-box;
     background: #ffffff;
     border: 1px solid #e5eaf0;
     border-radius: 12px;
     padding: 20px;
-    min-width: 220px;
+    min-width: 0;
     box-shadow: 0 3px 10px rgba(20, 45, 70, 0.06);
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -45,14 +45,17 @@
 
 .smartDashboardIcon {
     color: #0a6ed1;
-    margin-bottom: 12px;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
 }
 
 @media (max-width: 600px) {
+    .smartDashboardCards {
+        width: 100%;
+    }
+
     .smartDashboardCard {
         width: 100% !important;
-        min-width: 0;
-        box-sizing: border-box;
         margin-right: 0 !important;
     }
 }

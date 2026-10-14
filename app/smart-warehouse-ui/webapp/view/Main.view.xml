@@ -23,6 +23,7 @@
                     <VBox
                         width="15rem"
                         class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://product" size="1.5rem" class="sapUiTinyMarginBottom"/>
                         <Title text="Produtos distintos" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalProducts}"
@@ -32,6 +33,7 @@
                     <VBox
                         width="15rem"
                         class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://factory" size="1.5rem" class="sapUiTinyMarginBottom"/>
                         <Title text="Depósitos com saldo" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalLocations}"
@@ -41,6 +43,7 @@
                     <VBox
                         width="15rem"
                         class="smartDashboardCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://inventory" size="1.5rem" class="sapUiTinyMarginBottom"/>
                         <Title text="Unidades em estoque" level="H4"/>
                         <ObjectNumber
                             number="{dashboard>/totalQuantity}"
@@ -155,7 +158,9 @@
                 <ColumnListItem>
                     <cells>
                         <Text text="{createdAt}"/>
-                        <Text text="{type}"/>
+                        <ObjectStatus
+                         text="{path: 'type', formatter: '.formatter.movementType'}"
+                         state="{path: 'type', formatter: '.formatter.movementState'}"/>
                         <Text text="{product/code}"/>
                         <Text text="{sourceLocation/code}"/>
                         <Text text="{destinationLocation/code}"/>
