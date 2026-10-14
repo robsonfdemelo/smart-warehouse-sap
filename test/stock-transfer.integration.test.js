@@ -35,6 +35,11 @@ test("Transferencia deve movimentar estoque entre depositos", async () => {
     async function consultarSaldo(depositoID) {
         const estoque = await consultar("Stock");
 
+        console.log(
+            "Registros de estoque:",
+            JSON.stringify(estoque.value, null, 2)
+        );
+
         const registro = estoque.value.find(
             item =>
                 item.product_ID === produto.ID &&
@@ -46,6 +51,12 @@ test("Transferencia deve movimentar estoque entre depositos", async () => {
 
     const origemAntes = await consultarSaldo(origem.ID);
     const destinoAntes = await consultarSaldo(destino.ID);
+
+    console.log("Produto:", produto.ID);
+    console.log("Deposito origem:", origem.ID);
+    console.log("Deposito destino:", destino.ID);
+    console.log("Saldo origem:", origemAntes);
+    console.log("Saldo destino:", destinoAntes);
 
     assert.ok(origemAntes >= 1, "Saldo insuficiente na origem");
 
@@ -72,6 +83,9 @@ test("Transferencia deve movimentar estoque entre depositos", async () => {
 
     const origemDepois = await consultarSaldo(origem.ID);
     const destinoDepois = await consultarSaldo(destino.ID);
+
+    console.log("Saldo origem depois:", origemDepois);
+    console.log("Saldo destino depois:", destinoDepois);
 
     assert.equal(origemDepois, origemAntes - 1);
     assert.equal(destinoDepois, destinoAntes + 1);
