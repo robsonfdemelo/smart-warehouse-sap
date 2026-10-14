@@ -7,7 +7,6 @@
         "url": "db.sqlite"
       }
     }
-<<<<<<< HEAD
   },
   "[test]": {
     "requires": {
@@ -18,7 +17,5 @@
         }
       }
     }
-=======
->>>>>>> origin/main
   }
 }

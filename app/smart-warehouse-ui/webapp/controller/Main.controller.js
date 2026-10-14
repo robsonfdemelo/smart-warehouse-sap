@@ -488,11 +488,8 @@ sap.ui.define([
 
         onNewProduct: function () {
             this.getView().setModel(new JSONModel({
-<<<<<<< HEAD
                 ID: "",
                 editing: false,
-=======
->>>>>>> origin/main
                 code: "",
                 name: "",
                 description: "",
@@ -504,7 +501,6 @@ sap.ui.define([
             this.byId("productFormDialog").open();
         },
 
-<<<<<<< HEAD
         onEditProduct: function (oEvent) {
             const oContext = oEvent.getSource().getBindingContext();
             if (!oContext) {
@@ -555,8 +551,6 @@ sap.ui.define([
             });
         },
 
-=======
->>>>>>> origin/main
         onCancelProduct: function () {
             this.byId("productFormDialog").close();
         },
@@ -564,34 +558,20 @@ sap.ui.define([
         onSaveProduct: async function () {
             const oForm = this.getView().getModel("productForm");
             const oData = oForm.getData();
-<<<<<<< HEAD
             if (oData.saving) {
                 return;
             }
             const sCode = String(oData.code || "").trim();
             const sName = String(oData.name || "").trim();
-=======
-            const sCode = String(oData.code || "").trim();
-            const sName = String(oData.name || "").trim();
-
-            if (oData.saving) {
-                return;
-            }
->>>>>>> origin/main
             if (!sCode || !sName) {
                 MessageBox.warning("Informe o código e o nome do produto.");
                 return;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
             const oList = this.byId("productsTable").getBinding("items");
             if (!oList) {
                 MessageBox.error("A lista de produtos não está disponível.");
                 return;
             }
-<<<<<<< HEAD
             const oPayload = {
                 code: sCode,
                 name: sName,
@@ -618,28 +598,11 @@ sap.ui.define([
                 }
                 this.byId("productFormDialog").close();
                 MessageToast.show(oData.editing ? "Produto atualizado com sucesso." : "Produto cadastrado com sucesso.");
-=======
-
-            oForm.setProperty("/saving", true);
-            try {
-                const oContext = oList.create({
-                    code: sCode,
-                    name: sName,
-                    description: String(oData.description || "").trim(),
-                    category: String(oData.category || "").trim(),
-                    unit: String(oData.unit || "").trim(),
-                    active: Boolean(oData.active)
-                });
-                await oContext.created();
-                this.byId("productFormDialog").close();
-                MessageToast.show("Produto cadastrado com sucesso.");
->>>>>>> origin/main
                 oList.refresh();
                 const oOperationProducts = this.byId("operationProduct").getBinding("items");
                 if (oOperationProducts) {
                     oOperationProducts.refresh();
                 }
-<<<<<<< HEAD
                 const oStock = this.byId("stockTable").getBinding("items");
                 if (oStock) {
                     oStock.refresh();
@@ -648,11 +611,6 @@ sap.ui.define([
             } catch (oError) {
                 console.error("Erro ao salvar produto:", oError);
                 MessageBox.error(oError.message || "Não foi possível salvar o produto.");
-=======
-            } catch (oError) {
-                console.error("Erro ao cadastrar produto:", oError);
-                MessageBox.error(oError.message || "Não foi possível cadastrar o produto.");
->>>>>>> origin/main
             } finally {
                 oForm.setProperty("/saving", false);
             }

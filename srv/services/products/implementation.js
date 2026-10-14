@@ -3,7 +3,6 @@ class ProductsService {
         this.repository = repository;
     }
 
-<<<<<<< HEAD
     validateName(req) {
         if (req.data.name === undefined) return;
         if (typeof req.data.name !== 'string' || !req.data.name.trim()) {
@@ -14,10 +13,6 @@ class ProductsService {
 
     async validateCode(req, isUpdate) {
         const code = typeof req.data.code === 'string' ? req.data.code.trim() : req.data.code;
-=======
-    async validateCode(req, isUpdate) {
-        const code = req.data.code?.trim();
->>>>>>> origin/main
         if (code === undefined) return;
         if (!code) return req.reject(400, 'Informe o código do produto.');
 

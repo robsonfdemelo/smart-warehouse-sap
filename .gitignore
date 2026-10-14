@@ -27,13 +27,9 @@ mta_archives/
 
 # Logs
 /logs/
-<<<<<<< HEAD
 *.log
 
 # Variaveis de ambiente
 .env
 .env.*
 !.env.example
-=======
-*.log
->>>>>>> origin/main

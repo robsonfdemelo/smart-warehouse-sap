@@ -196,11 +196,8 @@
                                 <Column><Text text="Nome"/></Column>
                                 <Column><Text text="Categoria"/></Column>
                                 <Column><Text text="Unidade"/></Column>
-<<<<<<< HEAD
                                 <Column><Text text="Status"/></Column>
                                 <Column hAlign="End"><Text text="Ações"/></Column>
-=======
->>>>>>> origin/main
                             </columns>
                             <items>
                                 <ColumnListItem>
@@ -209,14 +206,11 @@
                                         <Text text="{name}"/>
                                         <Text text="{category}"/>
                                         <Text text="{unit}"/>
-<<<<<<< HEAD
                                         <ObjectStatus text="{= ${active} ? 'Ativo' : 'Inativo' }" state="{= ${active} ? 'Success' : 'Error' }"/>
                                         <HBox justifyContent="End" alignItems="Center">
                                             <Button icon="sap-icon://edit" tooltip="Editar produto" type="Transparent" press=".onEditProduct"/>
                                             <Button icon="sap-icon://activate" tooltip="Ativar ou desativar produto" type="Transparent" press=".onToggleProductActive"/>
                                         </HBox>
-=======
->>>>>>> origin/main
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -229,11 +223,7 @@
             </Dialog>
             <Dialog
                 id="productFormDialog"
-<<<<<<< HEAD
                 title="{= ${productForm>/editing} ? 'Editar produto' : 'Novo produto' }"
-=======
-                title="Novo produto"
->>>>>>> origin/main
                 contentWidth="32rem"
                 stretchOnPhone="true"
                 busy="{productForm>/saving}">
