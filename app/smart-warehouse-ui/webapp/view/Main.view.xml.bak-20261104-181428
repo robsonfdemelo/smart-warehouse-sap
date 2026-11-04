@@ -1,0 +1,125 @@
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+        <dependents>
+            <Dialog id="productsDialog" title="Cadastro de produtos" contentWidth="60rem" stretchOnPhone="true">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Toolbar>
+                            <Title text="Produtos cadastrados" level="H3"/>
+                            <ToolbarSpacer/>
+                            <Button text="Novo produto" icon="sap-icon://add" type="Emphasized" press=".onNewProduct"/>
+                        </Toolbar>
+                        <Table id="productsTable" items="{/Products}" noDataText="Nenhum produto cadastrado">
+                            <columns>
+                                <Column>
+                                    <Text text="Código"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Nome"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Categoria"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Unidade"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{code}"/>
+                                        <Text text="{name}"/>
+                                        <Text text="{category}"/>
+                                        <Text text="{unit}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </content>
+                <endButton>
+                    <Button text="Fechar" press=".onCloseProducts"/>
+                </endButton>
+            </Dialog>
+            <Dialog id="productFormDialog" title="Novo produto" contentWidth="32rem" stretchOnPhone="true" busy="{productForm>/saving}">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Label text="Código" required="true" labelFor="newProductCode"/>
+                        <Input id="newProductCode" value="{productForm>/code}" maxLength="20" class="sapUiTinyMarginBottom"/>
+                        <Label text="Nome" required="true" labelFor="newProductName"/>
+                        <Input id="newProductName" value="{productForm>/name}" maxLength="100" class="sapUiTinyMarginBottom"/>
+                        <Label text="Descrição" labelFor="newProductDescription"/>
+                        <Input id="newProductDescription" value="{productForm>/description}" maxLength="255" class="sapUiTinyMarginBottom"/>
+                        <Label text="Categoria" labelFor="newProductCategory"/>
+                        <Input id="newProductCategory" value="{productForm>/category}" maxLength="50" class="sapUiTinyMarginBottom"/>
+                        <Label text="Unidade" labelFor="newProductUnit"/>
+                        <Input id="newProductUnit" value="{productForm>/unit}" maxLength="10" class="sapUiTinyMarginBottom"/>
+                        <CheckBox text="Produto ativo" selected="{productForm>/active}"/>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Salvar" type="Emphasized" enabled="{= !${productForm>/saving} }" press=".onSaveProduct"/>
+                </beginButton>
+                <endButton>
+                    <Button text="Cancelar" enabled="{= !${productForm>/saving} }" press=".onCancelProduct"/>
+                </endButton>
+            </Dialog>
+            <Dialog id="operationDialog" title="{operation>/title}" contentWidth="32rem" contentHeight="auto" verticalScrolling="true" horizontalScrolling="false" stretchOnPhone="true" busy="{operation>/saving}">
+                <content>
+                    <VBox class="sapUiContentPadding">
+                        <Label text="Produto" required="true" labelFor="operationProduct"/>
+                        <Select id="operationProduct" width="100%" selectedKey="{operation>/product_ID}" forceSelection="false" class="sapUiTinyMarginBottom" items="{/Products}">
+                            <core:Item key="{ID}" text="{code} - {name}"/>
+                        </Select>
+                        <Label text="Depósito de origem" required="true" visible="{operation>/showSource}" labelFor="operationSource"/>
+                        <Select id="operationSource" width="100%" selectedKey="{operation>/sourceLocation_ID}" forceSelection="false" visible="{operation>/showSource}" class="sapUiTinyMarginBottom" items="{/StorageLocations}">
+                            <core:Item key="{ID}" text="{code} - {name}"/>
+                        </Select>
+                        <Label text="Depósito de destino" required="true" visible="{operation>/showDestination}" labelFor="operationDestination"/>
+                        <Select id="operationDestination" width="100%" selectedKey="{operation>/destinationLocation_ID}" forceSelection="false" visible="{operation>/showDestination}" class="sapUiTinyMarginBottom" items="{/StorageLocations}">
+                            <core:Item key="{ID}" text="{code} - {name}"/>
+                        </Select>
+                        <Label text="Quantidade" required="true" labelFor="operationQuantity"/>
+                        <Input id="operationQuantity" width="100%" type="Text" value="{operation>/quantity}" placeholder="Ex.: 5" class="sapUiTinyMarginBottom"/>
+                        <Label text="Referência" labelFor="operationReference"/>
+                        <Input id="operationReference" width="100%" maxLength="100" value="{operation>/reference}" placeholder="Ex.: NF-001" class="sapUiTinyMarginBottom"/>
+                        <Label text="Observações" labelFor="operationNotes"/>
+                        <TextArea id="operationNotes" width="100%" rows="3" maxLength="255" value="{operation>/notes}" placeholder="Observações da movimentação"/>
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Confirmar" type="Emphasized" enabled="{= !${operation>/saving} }" press=".onSaveOperation"/>
+                </beginButton>
+                <endButton>
+                    <Button text="Cancelar" enabled="{= !${operation>/saving} }" press=".onCancelOperation"/>
+                </endButton>
+            </Dialog>
+
+            <Dialog id="minimumStockDialog" title="Configurar estoque mínimo" contentWidth="420px" stretchOnPhone="true" busy="{minimumStock>/saving}">
+            <content>
+                <VBox class="sapUiContentPadding">
+                    <Label text="Produto"/>
+                    <Text text="{minimumStock>/productCode}"/>
+
+                    <Label text="Depósito"/>
+                    <Text text="{minimumStock>/locationCode}"/>
+
+                    <Label text="Quantidade disponível"/>
+                    <ObjectNumber number="{minimumStock>/quantity}"/>
+
+                    <Label text="Estoque mínimo" required="true" labelFor="minimumStockInput"/>
+                    <Input id="minimumStockInput" value="{minimumStock>/minimumQuantity}" width="100%" type="Text" placeholder="Ex.: 40,000" enabled="{= !${minimumStock>/saving} }"/>
+                </VBox>
+            </content>
+            <beginButton>
+                <Button text="Salvar" type="Emphasized" enabled="{= !${minimumStock>/saving} }" press=".onSaveMinimumStock"/>
+            </beginButton>
+            <endButton>
+                <Button text="Cancelar" enabled="{= !${minimumStock>/saving} }" press=".onCancelMinimumStock"/>
+            </endButton>
+        </Dialog>
+    </dependents>
+</Page>
+</mvc:View>

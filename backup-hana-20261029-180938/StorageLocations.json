@@ -1,0 +1,28 @@
+﻿{
+    "value":  [
+                  {
+                      "ID":  "0789180b-ad38-46fc-8229-198b728ec05e",
+                      "active":  true,
+                      "code":  "0001",
+                      "createdAt":  "2026-10-29T16:42:57.850Z",
+                      "createdBy":  "admin",
+                      "modifiedAt":  "2026-10-29T16:42:57.850Z",
+                      "modifiedBy":  "admin",
+                      "name":  "Deposito Principal",
+                      "plant_ID":  "d43a1bec-2597-4b5d-9ae6-052ad7cb3054"
+                  },
+                  {
+                      "ID":  "b77d4b2f-d6ea-4e1b-a441-136ad4b5ba6f",
+                      "active":  true,
+                      "code":  "0002",
+                      "createdAt":  "2026-10-29T16:43:43.199Z",
+                      "createdBy":  "admin",
+                      "modifiedAt":  "2026-10-29T16:43:43.199Z",
+                      "modifiedBy":  "admin",
+                      "name":  "Deposito Secundario",
+                      "plant_ID":  "d43a1bec-2597-4b5d-9ae6-052ad7cb3054"
+                  }
+              ],
+    "entity":  "StorageLocations",
+    "count":  2
+}

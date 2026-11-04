@@ -14,7 +14,26 @@ class InventoryRepository {
     }
 
     async findByProductAndLocation(req, product_ID, storageLocation_ID) {
-        return cds.tx(req).run(SELECT.one.from('smartwarehouse.Stock').where({ product_ID, storageLocation_ID }));
+        return cds.tx(req).run(
+            SELECT.one.from('smartwarehouse.Stock').where({
+                product_ID,
+                storageLocation_ID
+            })
+        );
+    }
+
+    async updateMinimumStock(req, ID, minimumQuantity) {
+        const tx = cds.tx(req);
+
+        await tx.run(
+            UPDATE('smartwarehouse.Stock')
+                .set({ minimumQuantity })
+                .where({ ID })
+        );
+
+        return tx.run(
+            SELECT.one.from('smartwarehouse.Stock').where({ ID })
+        );
     }
 }
 

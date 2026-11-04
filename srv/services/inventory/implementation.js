@@ -1,3 +1,4 @@
+
 class InventoryService {
     constructor(repository) {
         this.repository = repository;
@@ -34,6 +35,32 @@ class InventoryService {
         }
 
         if (!isUpdate && req.data.quantity === undefined) req.data.quantity = 0;
+    }
+
+    async updateMinimumStock(req) {
+        const { stock_ID, minimumQuantity } = req.data;
+
+        if (!stock_ID) {
+            return req.reject(400, 'Informe o ID do registro de estoque.');
+        }
+
+        if (
+            minimumQuantity === undefined ||
+            minimumQuantity === null ||
+            minimumQuantity === '' ||
+            !Number.isFinite(Number(minimumQuantity)) ||
+            Number(minimumQuantity) < 0
+        ) {
+            return req.reject(400, 'O estoque mínimo deve ser um número maior ou igual a zero.');
+        }
+
+        const current = await this.repository.findStock(req, stock_ID);
+
+        if (!current) {
+            return req.reject(404, 'Registro de estoque não encontrado.');
+        }
+
+        return this.repository.updateMinimumStock(req, stock_ID, minimumQuantity);
     }
 }
 

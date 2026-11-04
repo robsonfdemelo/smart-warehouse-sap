@@ -1,0 +1,16 @@
+﻿{
+    "value":  [
+                  {
+                      "ID":  "d43a1bec-2597-4b5d-9ae6-052ad7cb3054",
+                      "active":  true,
+                      "code":  "1000",
+                      "createdAt":  "2026-10-29T16:42:11.472Z",
+                      "createdBy":  "admin",
+                      "modifiedAt":  "2026-10-29T16:42:11.472Z",
+                      "modifiedBy":  "admin",
+                      "name":  "Centro Principal"
+                  }
+              ],
+    "entity":  "Plants",
+    "count":  1
+}

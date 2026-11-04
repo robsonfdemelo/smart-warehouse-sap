@@ -1,3 +1,4 @@
+
 class InventoryController {
     constructor(service) {
         this.service = service;
@@ -9,6 +10,10 @@ class InventoryController {
 
     async validateUpdate(req) {
         await this.service.validateStock(req, true);
+    }
+
+    async updateMinimumStock(req) {
+        return this.service.updateMinimumStock(req);
     }
 }
 

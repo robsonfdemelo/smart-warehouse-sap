@@ -1,0 +1,19 @@
+﻿{
+    "value":  [
+                  {
+                      "ID":  "10000000-0000-4000-8000-000000000001",
+                      "active":  true,
+                      "category":  "Teste",
+                      "code":  "HANA001",
+                      "createdAt":  null,
+                      "createdBy":  null,
+                      "description":  "Primeiro produto criado no SAP HANA Cloud",
+                      "modifiedAt":  null,
+                      "modifiedBy":  null,
+                      "name":  "Produto Teste HANA",
+                      "unit":  "UN"
+                  }
+              ],
+    "entity":  "Products",
+    "count":  1
+}

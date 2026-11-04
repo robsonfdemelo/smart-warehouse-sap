@@ -1,0 +1,26 @@
+﻿{
+    "value":  [
+                  {
+                      "ID":  "126cdadd-e121-4867-bcdc-ac54a8138c92",
+                      "createdAt":  "2026-10-29T16:48:53.136Z",
+                      "createdBy":  "admin",
+                      "modifiedAt":  "2026-10-29T16:48:53.136Z",
+                      "modifiedBy":  "admin",
+                      "product_ID":  "10000000-0000-4000-8000-000000000001",
+                      "quantity":  "30.000",
+                      "storageLocation_ID":  "b77d4b2f-d6ea-4e1b-a441-136ad4b5ba6f"
+                  },
+                  {
+                      "ID":  "c241dcd6-fe3b-4029-af66-3ece1bf00091",
+                      "createdAt":  "2026-10-29T16:46:24.979Z",
+                      "createdBy":  "admin",
+                      "modifiedAt":  "2026-10-29T20:02:21.282Z",
+                      "modifiedBy":  "admin",
+                      "product_ID":  "10000000-0000-4000-8000-000000000001",
+                      "quantity":  "60.000",
+                      "storageLocation_ID":  "0789180b-ad38-46fc-8229-198b728ec05e"
+                  }
+              ],
+    "entity":  "Stock",
+    "count":  2
+}
