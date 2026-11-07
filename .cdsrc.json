@@ -1,15 +1,13 @@
 
 {
-  "requires": {
-    "db": {
-      "kind": "sqlite",
-      "credentials": {
-        "url": "db.sqlite"
-      }
-    }
-  },
   "[development]": {
     "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      },
       "auth": {
         "kind": "mocked",
         "users": {
@@ -26,6 +24,16 @@
             "roles": ["Admin", "Operator", "Viewer"]
           }
         }
+      }
+    }
+  },
+  "[production]": {
+    "requires": {
+      "db": {
+        "kind": "hana"
+      },
+      "auth": {
+        "kind": "xsuaa"
       }
     }
   },

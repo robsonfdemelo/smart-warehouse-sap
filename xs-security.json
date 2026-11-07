@@ -1,0 +1,19 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Operator",
+      "description": "Operator"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "Operator",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.Operator"
+      ],
+      "attribute-references": []
+    }
+  ]
+}

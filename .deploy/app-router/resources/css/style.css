@@ -1,0 +1,61 @@
+.smartDashboardCard {
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 0;
+    box-shadow: 0 3px 10px rgba(20, 45, 70, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.smartDashboardCard:hover {
+    box-shadow: 0 8px 20px rgba(20, 45, 70, 0.12);
+    transform: translateY(-2px);
+}
+
+.smartDashboardCard .sapMTitle {
+    color: #475569;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.smartDashboardCard .sapMObjectNumber {
+    display: block;
+    height: auto;
+    min-height: 2.75rem;
+    line-height: normal;
+    overflow: visible;
+    margin: 0.5rem 0;
+}
+
+.smartDashboardCard .sapMObjectNumberText {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #123b62;
+    vertical-align: middle;
+}
+
+.smartDashboardCard .sapMText {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.smartDashboardIcon {
+    color: #0a6ed1;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+@media (max-width: 600px) {
+    .smartDashboardCards {
+        width: 100%;
+    }
+
+    .smartDashboardCard {
+        width: 100% !important;
+        margin-right: 0 !important;
+    }
+}

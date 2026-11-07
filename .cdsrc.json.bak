@@ -1,0 +1,91 @@
+
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "credentials": {
+        "url": "db.sqlite"
+      }
+    }
+  },
+  "[development]": {
+    "requires": {
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "viewer": {
+            "password": "viewer123",
+            "roles": ["Viewer"]
+          },
+          "operator": {
+            "password": "operator123",
+            "roles": ["Operator"]
+          },
+          "admin": {
+            "password": "admin123",
+            "roles": ["Admin", "Operator", "Viewer"]
+          }
+        }
+      }
+    }
+  },
+  "[test]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/test.sqlite"
+        }
+      }
+    }
+  },
+  "[integration]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/integration.sqlite"
+        }
+      }
+    }
+  },
+  "[ci]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "test/ci-validation.sqlite"
+        }
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "operator": {
+            "password": "operator123",
+            "roles": ["Operator"]
+          }
+        }
+      }
+    }
+  },
+  "[hana]": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "credentials": {
+          "url": null
+        }
+      }
+    }
+  },
+  "[hybrid]": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "credentials": {
+          "url": null
+        }
+      }
+    }
+  }
+}

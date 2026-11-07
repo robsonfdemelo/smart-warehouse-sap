@@ -4,7 +4,7 @@
   "description": "Smart Warehouse SAP - Sistema de Gestão de Armazém",
   "main": "index.js",
   "scripts": {
-    "start": "cds serve",
+    "start": "cds-serve",
     "watch": "cds watch",
     "test:api": "node --test test/catalog-api.test.js",
     "test:integration": "node --test --test-concurrency=1 test/stock-entry.integration.test.js test/stock-exit.integration.test.js test/stock-transfer.integration.test.js test/stock-validation.integration.test.js"
@@ -15,10 +15,18 @@
   "type": "commonjs",
   "dependencies": {
     "@cap-js/hana": "^3.1.2",
-    "@sap/cds": "10.1.1"
+    "@sap/cds": "10.1.1",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^3.1.2",
     "@sap/cds-dk": "^10.1.0"
+  },
+  "cds": {
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
   }
 }
